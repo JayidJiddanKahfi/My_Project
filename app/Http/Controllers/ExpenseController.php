@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Expense;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+class ExpenseController extends Controller
+{
+    
+    public function create(Request $request){
+
+        //membuat kumpulan rule (aturan) untuk validasi request
+        $rules = [           
+            "expense_date" => ["required","date"],
+            "description" => ["required","string"],
+            "amount" => ["required","integer"],
+        ];
+
+        //membuat kumpulan atribut awal untuk melakukan pengisan data di masing masing kolom sesuai atribut
+        $attributes = [
+            "expense_date" => $request->expense_date,
+            "description" => $request->description,
+            "amount" => $request->amount,
+            "recorded_by" => Auth::id()
+        ];
+
+        // membuat validasi terhadap request dari user berdasakan rules yang telah dibuat
+        $validator = Validator::make($request->all(),$rules);
+
+        // pengkondisian jika hasilnya tidak valid maka akan mereturn respon json berupa error dari objek validator
+        if($validator->fails()){
+            return response()->json(["errors" => $validator->errors()],422);
+        }
+
+        // jika hasilnya valid, selanjutnya membuat objek expense sekaligus membuat data baru di tabel expenses berdasarkan attribute
+        $expense = Expense::create($attributes);
+
+        //mereturn response json berupa data dari objek expense
+        return response()->json(["expenseData" => $expense],201);
+    }
+
+    public function read(){
+        //mengambil semua data di kolom pada semua baris dan mereturn dalam bentuk objek expenses
+        $expenses = Expense::select('*')->get();
+
+        //mereturn response json berupa data dari objek expenses
+        return response()->json(["expensesData" => $expenses]);
+    }
+
+}
