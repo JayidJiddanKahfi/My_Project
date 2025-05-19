@@ -1,0 +1,741 @@
+{
+	"info": {
+		"_postman_id": "c4f9407c-2ec5-435f-8e4f-5bfaa4221643",
+		"name": "Pembayaran Iuran Warga App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33735868"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.environment.set(\"user_token\",  `Bearer ${jsonData.userData.token}`);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"jayidjiddan231@gmail.com\",\r\n    \"password\":\"jayid123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/login",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/me",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"jayidjiddan231@gmail.com\",\r\n    \"password\":\"jayid123\"\r\n}"
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/logout",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create_user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Mahfuddin Zuhri\",\r\n    \"email\" : \"MahfuddinZuhri@gmail.com\",\r\n    \"password\" : \"MahfuddinIPB\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/create_user",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"create_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_user",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Mahfuddin Zuhri\",\r\n    \"email\" : \"MahfuddinZuhriIPB@gmail.com\",\r\n    \"password\" : \"MahfuddinIPB_fisika\",\r\n    \"role\": \"admin\",\r\n    \"_method\": \"put\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/update_user/7",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"update_user",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_method\" : \"delete\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/delete_user/6",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"delete_user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "create_payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"resident_id\" : 1,\r\n    \"payment_date\" : \"2025-05-13\",\r\n    \"number_of_payment_month\": 2,\r\n    \"payment_month\": \"2025-01 to 2025-02\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/create_payment",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"create_payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_payment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_payment",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expense",
+			"item": [
+				{
+					"name": "create_expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"expense_date\" : \"2025-05-13\",\r\n   \"description\" : \"Pengeluaran untuk Halal Bi Halal\",\r\n   \"amount\" : 200000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/create_expense",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"create_expense"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_expense",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_expense",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_expense"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resident",
+			"item": [
+				{
+					"name": "create_resident",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"salutation\": \"Bapak\",\r\n    \"full_name\": \"Mahfuddin Zuhri\",\r\n    \"address\": \"Jl. DKI Barat 1 No.4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/create_resident",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"create_resident"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_resident",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_resident",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_resident"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_resident",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"salutation\": \"Bapak\",\r\n    \"full_name\": \"Mahfuddin\",\r\n    \"address\": \"Jl. DKI Barat 1 No.4\",\r\n    \"_method\": \"put\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/update_resident/3",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"update_resident",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_resident",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "delete",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/delete_resident/2",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"delete_resident",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fee",
+			"item": [
+				{
+					"name": "create_fee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contribution_amount\" : 30000,\r\n    \"social_fund\" : 20000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/create_fee",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"create_fee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_fee",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_fee",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_fee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_fee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contribution_amount\" : 30000,\r\n    \"social_fund\" : 20000,\r\n    \"_method\": \"put\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/update_fee",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"update_fee"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_fee",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/delete_fee",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"delete_fee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
