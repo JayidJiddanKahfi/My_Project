@@ -6,8 +6,6 @@ use App\Http\Controllers\FeeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\UserController;
-use App\Models\Payment;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class,'login']);
