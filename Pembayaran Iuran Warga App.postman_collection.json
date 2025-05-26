@@ -308,11 +308,17 @@
 								"key": "Authorization",
 								"value": "{{user_token}}",
 								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"resident_id\" : 1,\r\n    \"payment_date\" : \"2025-05-13\",\r\n    \"number_of_payment_month\": 2,\r\n    \"payment_month\": \"2025-01 to 2025-02\"\r\n}",
+							"raw": "{\r\n    \"resident_id\" : 1,\r\n    \"payment_date\" : \"2025-06-15\",\r\n    \"number_of_payment_month\": 3,\r\n    \"payment_month\": \"2025-01 to 2025-03\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -354,6 +360,34 @@
 							],
 							"path": [
 								"read_payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_contribution",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_contribution",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_contribution"
 							]
 						}
 					},
@@ -730,6 +764,39 @@
 							],
 							"path": [
 								"delete_fee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "read_dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Kas_RT_App_Url}}/read_dashboard",
+							"host": [
+								"{{Kas_RT_App_Url}}"
+							],
+							"path": [
+								"read_dashboard"
 							]
 						}
 					},

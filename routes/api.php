@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\PaymentController;
@@ -33,10 +34,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
 
-    Route::post('/create_payment',[PaymentController::class,'create']);
-    Route::get('/read_payment',[PaymentController::class,'read']);
+    Route::post('/create_payment',[PaymentController::class,'create_second_version']);
+    Route::get('/read_payment',[PaymentController::class,'read_for_payments']);
+    Route::get('/read_contribution',[PaymentController::class,'read_for_contributions']);
 
     Route::post('/create_expense',[ExpenseController::class,'create']);
     Route::get('/read_expense',[ExpenseController::class,'read']);
+
+    Route::get('read_dashboard',[DashboardController::class,'read']);
 
 });;
