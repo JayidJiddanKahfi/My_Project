@@ -92,10 +92,21 @@ class UserController extends Controller
 
     public function delete($id){
         //mencari baris pada tabel berdasarkan id yang sesuai lalu menghapus baris tersebut
-        User::select("*")->where("id",$id)->first()->delete();
+        $user = User::select("*")->where("id",$id)->first();
+
+        if($user->count() !== 0){
+            
+            $user->delete();
+            //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
+            return response()->json(["message"=>"User with id number $id has been succesfully deleted"]);
         
-        //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-        return response()->json(["message"=>"User with id number $id has been succesfully deleted"]);
+        }
+        else{
+
+            return response()->json(["message"=>"User with id number $id is not exist"]);
+        
+        }
+    
     }
 
 }

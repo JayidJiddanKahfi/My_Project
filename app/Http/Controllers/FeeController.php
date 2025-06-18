@@ -90,10 +90,19 @@ class FeeController extends Controller
     }
 
     public function delete(){
-        //mencari  1 baris fee pada tabel fees lalu menghapusnya
-        Fee::select('*')->first()->delete();
+         $fee = Fee::select("*")->first();
 
-        //mereturn response json berupa message yaitu data tersebut berhasil dihapus
-        return response()->json(["message" => "User has been succesfully deleted"]);
+        if($fee->count() !== 0){
+            
+            $fee->delete();
+            //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
+            return response()->json(["message"=>"Fee has been succesfully deleted"]);
+        
+        }
+        else{
+
+            return response()->json(["message"=>"Fee is not exist"]);
+        
+        }
     }
 }

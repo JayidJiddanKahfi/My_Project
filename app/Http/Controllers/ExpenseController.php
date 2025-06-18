@@ -50,4 +50,21 @@ class ExpenseController extends Controller
         return response()->json(["expensesData" => $expenses]);
     }
 
+    public function delete($id){
+         $expense = Expense::select("*")->where("id",$id)->first();
+
+        if($expense->count() !== 0){
+            
+            $expense->delete();
+            //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
+            return response()->json(["message"=>"Expense with id number $id has been succesfully deleted"]);
+        
+        }
+        else{
+
+            return response()->json(["message"=>"Expense with id number $id is not exist"]);
+        
+        }
+    }
+
 }

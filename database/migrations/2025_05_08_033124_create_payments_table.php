@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('resident_id')->references('id')->on('residents')->onDelete('cascade');
             $table->date('payment_date');
-            $table->integer('number_of_payment_month');
             $table->string('payment_month',18);
+            $table->enum('payment_type',['thr','iuran']);
+            $table->enum('payment_method',['cash','transfer','e-wallet']);
             $table->integer('contribution');
             $table->foreignId('recorded_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -89,11 +89,20 @@ class ResidentController extends Controller
 
     public function delete($id){
 
-        //mencari baris pada tabel berdasarkan id yang sesuai lalu menghapus baris tersebut
-        Resident::select('*')->where('id',$id)->first()->delete();
+        $resident = Resident::select("*")->where("id",$id)->first();
 
-        //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-        return response()->json(["message"=>"Resident with id number $id has been succesfully deleted"]);
+        if($resident->count() !== 0){
+            
+            $resident->delete();
+            //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
+            return response()->json(["message"=>"Resident with id number $id has been succesfully deleted"]);
+        
+        }
+        else{
+
+            return response()->json(["message"=>"Resident with id number $id is not exist"]);
+        
+        }
     }
 
 }

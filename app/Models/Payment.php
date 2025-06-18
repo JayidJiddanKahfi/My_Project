@@ -13,6 +13,8 @@ class Payment extends Model
         'number_of_payment_month',
         'payment_date',
         'payment_month',
+        'payment_type',
+        'payment_method',
         'contribution',
         'recorded_by',
     ];

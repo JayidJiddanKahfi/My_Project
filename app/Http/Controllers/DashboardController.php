@@ -36,6 +36,10 @@ class DashboardController extends Controller
 
         // print($total_finance . "\n");
 
+        $total_residents = Resident::count();
+
+        // print($total_residents . "\n");
+
         $this_years_income = Payment::select("contribution")->where("payment_date",'LIKE',$this_year ."%")->get()->sum('contribution');
 
         // print($this_years_income . "\n");
@@ -56,11 +60,12 @@ class DashboardController extends Controller
 
         // print( $unpaid_residents . "\n");
 
-        $dashboard = [
+        $dashboard =  [
            "general_information" => [
                 "total_finance" => $total_finance,
                 "total_income" => $total_income,
                 "total_expense" => $total_expense,
+                "total_residents" => $total_residents
            ],
 
            "annual recap" => [
