@@ -68,12 +68,12 @@ class DashboardController extends Controller
                 "total_residents" => $total_residents
            ],
 
-           "annual recap" => [
+           "annual_recap" => [
                 "this_year_income" => $this_years_income,
                 "this_year_expense" => $this_years_expense
            ],
 
-           "monthly recap" => [
+           "monthly_recap" => [
                 "this_month_income" => $this_months_income,
                 "this_month_expense" => $this_months_expense,
                 "unpaid_residents" => $unpaid_residents
