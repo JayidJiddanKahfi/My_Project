@@ -11,6 +11,7 @@ use App\Http\Controllers\ResidentController;
 use App\Http\Controllers\DashboardController;
 
 Route::post('/login', [AuthController::class,'login']);
+Route::get('/token_check/{userTokenWithTokenID}',[AuthController::class,'tokenCheck']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/me',[AuthController::class,'me']);

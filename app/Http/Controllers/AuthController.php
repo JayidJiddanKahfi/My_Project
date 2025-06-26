@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -34,6 +35,30 @@ class AuthController extends Controller
 
         // jika user yang mencoba login datanya tidak ada di database maka akan mereturn message invalid login credentials
         return response()->json(['message' => 'Invalid login credentials'], 401);
+    }
+
+    public function tokenCheck($userTokenWithTokenID){
+        $userTokenWithTokenID_parts = explode('|',$userTokenWithTokenID);
+
+        $userToken = $userTokenWithTokenID_parts[1];
+        
+        $tokenHash = hash('sha256',$userToken);
+
+        // return $tokenHash;
+
+        $isUserTokenValid = PersonalAccessToken::select('token')->where('token',$tokenHash)->exists();
+
+        $validationMessage = '';
+
+        if($isUserTokenValid){
+            $validationMessage = 'token valid';
+        }
+        else{
+            $validationMessage = 'token tidak valid';
+        }
+
+        return response()->json(['tokenValidationMessage'=>$validationMessage],200);
+
     }
 
     public function me(Request $request){
