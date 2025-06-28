@@ -38,6 +38,14 @@ class AuthController extends Controller
     }
 
     public function tokenCheck($userTokenWithTokenID){
+
+        $userTokenWithTokenIDSeparator = '|';
+
+        if(!str_contains($userTokenWithTokenID,$userTokenWithTokenIDSeparator)){
+            $validationMessage = 'token tidak valid'; 
+        }
+        else{
+
         $userTokenWithTokenID_parts = explode('|',$userTokenWithTokenID);
 
         $userToken = $userTokenWithTokenID_parts[1];
@@ -56,6 +64,7 @@ class AuthController extends Controller
         else{
             $validationMessage = 'token tidak valid';
         }
+     }
 
         return response()->json(['tokenValidationMessage'=>$validationMessage],200);
 
