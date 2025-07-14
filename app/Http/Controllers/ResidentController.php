@@ -35,17 +35,31 @@ class ResidentController extends Controller
             return response()->json(["errors" => $validator->errors()],422);
         }
 
-        // jika hasilnya valid, selanjutnya membuat objek resident sekaligus membuat data baru di tabel residents berdasarkan attribute
-        $resident = Resident::create($attributes);
+        $existing_resident = Resident::select(['salutation','full_name','address'])->where('address',$request->address)->where('full_name',$request->full_name)->first();
 
-        //mereturn response json berupa data dari objek resident
-        return response()->json(["residentData" => $resident],201);
+        if($existing_resident){
+            return response()->json(["errors" =>  "$existing_resident->salutation $existing_resident->full_name ($existing_resident->address) is already exists"],422);
+        }
+        else{
+            // jika hasilnya valid, selanjutnya membuat objek resident sekaligus membuat data baru di tabel residents berdasarkan attribute
+            $resident = Resident::create($attributes);
 
+            //mereturn response json berupa data dari objek resident
+            return response()->json(["residentData" => $resident,"message" => 'Resident data has been added'],201);
+        }
     }
 
-    public function read(){
+     public function read_all_resident(){
         //mengambil data dari beberapa kolom pada semua baris dan mereturn dalam objek residents
-        $residents = Resident::select(['id','salutation','full_name','address'])->get();
+        $residents = Resident::select(columns: ['id','salutation','full_name','address'])->get();
+        
+        //mereturn response json berupa data dari objek residents
+        return response()->json(['residentsData'=>$residents]);
+    }
+
+    public function read_paginate_resident($dataPerPage){
+        //mengambil data dari beberapa kolom pada semua baris dan mereturn dalam objek residents
+        $residents = Resident::select(columns: ['id','salutation','full_name','address'])->paginate($dataPerPage);
         
         //mereturn response json berupa data dari objek residents
         return response()->json(['residentsData'=>$residents]);
@@ -89,18 +103,18 @@ class ResidentController extends Controller
 
     public function delete($id){
 
-        $resident = Resident::select("*")->where("id",$id)->first();
+        $resident = Resident::select("*")->where("id",$id);
 
-        if($resident->count() !== 0){
+        if($resident->exists()){
             
-            $resident->delete();
+            $resident->first()->delete();
             //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-            return response()->json(["message"=>"Resident with id number $id has been succesfully deleted"]);
+            return response()->json(["message"=>"Resident has been deleted"]);
         
         }
         else{
 
-            return response()->json(["message"=>"Resident with id number $id is not exist"]);
+            return response()->json(["errors"=>"This resident is not exist, please refresh the page"],422);
         
         }
     }

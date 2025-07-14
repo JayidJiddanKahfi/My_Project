@@ -126,7 +126,9 @@ class ReportController extends Controller
 
         Carbon::setLocale('id');
 
-        if(strlen($payment->month) === 18){
+       if($payment->payment_type === 'iuran'){
+
+         if(strlen($payment->month) === 18){
             $monthStringArray = explode(' to ',$payment->month);
 
             $newMonthStringFormat = '';
@@ -136,7 +138,7 @@ class ReportController extends Controller
                 $date = Carbon::createFromFormat('Y-m',$monthString);
 
                 if($index === 0){
-                    $newMonthStringFormat = "bulan " . $newMonthStringFormat . $date->translatedFormat('F Y');
+                    $newMonthStringFormat = $newMonthStringFormat . "bulan ". $date->translatedFormat('F Y');
                 }
                 else{
                     $newMonthStringFormat = $newMonthStringFormat . " sampai dengan bulan " . $date->translatedFormat('F Y');
@@ -144,8 +146,18 @@ class ReportController extends Controller
 
             }
 
-            $payment->month = $newMonthStringFormat;
         }
+        else if(strlen($payment->month) === 7){
+             $newMonthStringFormat = '';
+
+             $date = Carbon::createFromFormat('Y-m',$payment->month);
+
+             $newMonthStringFormat = $newMonthStringFormat . "bulan ". $date->translatedFormat('F Y');
+        }
+        
+          $payment->month = $newMonthStringFormat;
+
+       }
 
         $dateStringFormat = $payment->payment_date;
 
@@ -203,7 +215,9 @@ class ReportController extends Controller
 
         Carbon::setLocale('id');
 
-        if(strlen($payment->month) === 18){
+       if($payment->payment_type === 'iuran'){
+
+         if(strlen($payment->month) === 18){
             $monthStringArray = explode(' to ',$payment->month);
 
             $newMonthStringFormat = '';
@@ -213,7 +227,7 @@ class ReportController extends Controller
                 $date = Carbon::createFromFormat('Y-m',$monthString);
 
                 if($index === 0){
-                    $newMonthStringFormat = "bulan " . $newMonthStringFormat . $date->translatedFormat('F Y');
+                    $newMonthStringFormat = $newMonthStringFormat . "bulan ". $date->translatedFormat('F Y');
                 }
                 else{
                     $newMonthStringFormat = $newMonthStringFormat . " sampai dengan bulan " . $date->translatedFormat('F Y');
@@ -221,8 +235,19 @@ class ReportController extends Controller
 
             }
 
-            $payment->month = $newMonthStringFormat;
         }
+        else if(strlen($payment->month) === 7){
+             $newMonthStringFormat = '';
+
+             $date = Carbon::createFromFormat('Y-m',$payment->month);
+
+             $newMonthStringFormat = $newMonthStringFormat . "bulan ". $date->translatedFormat('F Y');
+        }
+
+          $payment->month = $newMonthStringFormat;
+
+       }
+
 
         $dateStringFormat = $payment->payment_date;
 

@@ -35,7 +35,7 @@ class UserController extends Controller
 
         // pengkondisian jika hasilnya tidak valid maka akan mereturn respon json berupa error dari objek validator
         if($validator->fails()){
-            return response()->json(["error" => $validator->errors()],422);
+            return response()->json(["errors" => $validator->errors()],422);
         }
 
         
@@ -98,12 +98,12 @@ class UserController extends Controller
             
             $user->delete();
             //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-            return response()->json(["message"=>"User with id number $id has been succesfully deleted"]);
+            return response()->json(["message"=>"User has been deleted"]);
         
         }
         else{
 
-            return response()->json(["message"=>"User with id number $id is not exist"]);
+            return response()->json(["message"=>"User is not exist"]);
         
         }
     

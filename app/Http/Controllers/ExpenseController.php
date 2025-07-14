@@ -39,30 +39,30 @@ class ExpenseController extends Controller
         $expense = Expense::create($attributes);
 
         //mereturn response json berupa data dari objek expense
-        return response()->json(["expenseData" => $expense],201);
+        return response()->json(["expenseData" => $expense, "message" => 'Expense data has been added'],201);
     }
 
-    public function read(){
+    public function read($dataPerPage,$targetYear){
         //mengambil semua data di kolom pada semua baris dan mereturn dalam bentuk objek expenses
-        $expenses = Expense::select('*')->get();
+        $expenses = Expense::select('*')->with('user')->where('expense_date','LIKE',$targetYear . '%')->paginate($dataPerPage);
 
         //mereturn response json berupa data dari objek expenses
         return response()->json(["expensesData" => $expenses]);
     }
 
     public function delete($id){
-         $expense = Expense::select("*")->where("id",$id)->first();
+         $expense = Expense::select("*")->where("id",$id);
 
-        if($expense->count() !== 0){
+        if($expense->exists()){
             
-            $expense->delete();
+            $expense->first()->delete();
             //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-            return response()->json(["message"=>"Expense with id number $id has been succesfully deleted"]);
+            return response()->json(["message"=>"Expense has been  deleted"]);
         
         }
         else{
 
-            return response()->json(["message"=>"Expense with id number $id is not exist"]);
+            return response()->json(["errors"=>"This expense is not exist, please refresh the page"],422);
         
         }
     }

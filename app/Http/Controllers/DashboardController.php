@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
         // print($total_residents . "\n");
 
-        $this_years_income = Payment::select("contribution")->where("payment_date",'LIKE',$this_year ."%")->get()->sum('contribution');
+        $this_years_income = Payment::select("contribution")->where("payment_month",'LIKE',$this_year ."%")->get()->sum('contribution');
 
         // print($this_years_income . "\n");
 
@@ -48,7 +48,7 @@ class DashboardController extends Controller
 
         // print($this_years_expense . "\n");
 
-        $this_months_income = Payment::select("contribution")->where("payment_date",'LIKE',"%" . $this_month . "%")->get()->sum('contribution');;
+        $this_months_income = Payment::select("contribution")->where("payment_month",'LIKE',"%" . $this_month . "%")->get()->sum('contribution');;
 
         // print($this_months_income . "\n");
 

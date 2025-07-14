@@ -18,7 +18,7 @@
             margin: 50px auto; 
             width: fit-content;
             border-collapse: collapse;
-            font-size: 11px; 
+            font-size: 12px; 
         }
 
         table.data th, table.data td { 
@@ -147,7 +147,7 @@
                 <ul style="list-style: none">
                     <h4>Keterangan warna</h4>
                     <li>
-                        <div class="merah_muda"></div> <span> : belum dibayar</span>
+                        <div class="merah_muda"></div> <span> : Belum dibayar</span>
                     </li>
                      <li>
                         <div class="hijau_muda"></div> <span> : Sudah dibayar</span>

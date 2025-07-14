@@ -466,7 +466,7 @@ class PaymentController extends Controller
 
             if($existing_payment_year_for_thr){
 
-                return response()->json(["error" => "Payment has paid for " . $existing_payment_year_for_thr->payment_month],422);
+                return response()->json(["errors" => "Payment has paid for " . $existing_payment_year_for_thr->payment_month],422);
             }
             else{
 
@@ -475,7 +475,7 @@ class PaymentController extends Controller
                 $payment = Payment::create($attributes);
 
                 //mereturn response json berupa data dari objek payment
-                return response()->json(["paymentData" => $payment],201);
+                return response()->json(["paymentData" => $payment, "message" => 'Payment data has been added'],201);
             }
            
         }
@@ -565,12 +565,12 @@ class PaymentController extends Controller
 
             if($month_parts[0] !== $min_payment_month_accepted && $month_parts[1] !== $max_payment_month_accepted){
                 if($min_payment_month === $max_payment_month){
-                    $error = "Payment_month must be sequential according to the existing payment_month for the same payment_date that you entered. Note: the existing payment_month in the same payment_date is $min_payment_month according to payment_date $payment_date";
+                    $error = "Payment Month must be sequential according to the existing Payment Month for the same Payment Date that you entered. Note: the existing Payment Month in the same Payment Date is $min_payment_month according to Payment Date $payment_date";
                 }
                 else{
-                    $error = "Payment_month must be sequential according to the existing payment_month for the same payment_date that you entered. Note: the existing payment_month in the same payment_date are $min_payment_month to $max_payment_month according to payment_date $payment_date";
+                    $error = "Payment Month must be sequential according to the existing Payment Month for the same Payment Date that you entered. Note: the existing Payment Month in the same Payment Date are $min_payment_month to $max_payment_month according to Payment Date $payment_date";
                 }
-                return response()->json(["error" => $error],422);
+                return response()->json(["errors" => $error],422);
             }
             else{
                 if($total_month_of_payments >= 1){
@@ -586,11 +586,11 @@ class PaymentController extends Controller
 
                     }
                     //mereturn response json berupa data dari objek payment
-                    return response()->json(["paymentData" => $payment],201);
+                    return response()->json(["paymentData" => $payment,"message" => 'Payment data has been added'],201);
                 }
                 elseif($total_month_of_payments < 1){
 
-                    return response()->json(["error" => "the end payment must be greater than the start payment"],422);
+                    return response()->json(["errors" => "the end payment must be greater than the start payment"],422);
                 
                 }
                 
@@ -611,7 +611,7 @@ class PaymentController extends Controller
 
                 }
                 //mereturn response json berupa data dari objek payment
-                return response()->json(["paymentData" => $payment],201);
+                return response()->json(["paymentData" => $payment,"message" => 'Payment data has been added'],201);
             }
             elseif($total_month_of_payments < 1){
 
@@ -972,18 +972,18 @@ class PaymentController extends Controller
 
     public function delete_payment($residentId,$paymentDate,$paymentType){
         
-        $payments = Payment::select('*')->where('resident_id',$residentId)->where('payment_date',$paymentDate)->where('payment_type',$paymentType)->get();
+        $payments = Payment::select('*')->where('resident_id',$residentId)->where('payment_date',$paymentDate)->where('payment_type',$paymentType);
 
-        if($payments->count() !== 0){
+        if($payments->exists()){
             
-            $payments->each(function($payment){$payment->delete();});
+            $payments->get()->each(function($payment){$payment->delete();});
             //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-            return response()->json(["message"=>"Payment with 'resident_id' number $residentId, 'payment_date' $paymentDate, and 'payment_type' $paymentType has been succesfully deleted"]);
+            return response()->json(["message"=>"Payment has been deleted"],200);
         
         }
         else{
 
-            return response()->json(["message"=>"Payment with 'resident_id' number $residentId, 'payment_date' $paymentDate, and 'payment_type' $paymentType is not exist"]);
+            return response()->json(["errors"=>"This payment is not exist, please refresh the page"],422);
         
         }
 

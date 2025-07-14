@@ -28,7 +28,7 @@ class FeeController extends Controller
 
         //pengkondisian untuk memastikan tabel Fees memiliki jumlah baris tidak lebih dari 1
         if($feeRowCount === 1){
-            return response()->json(["error" => "the maximum limit of fee data is only one"],422);
+            return response()->json(["errors" => "the maximum limit of fee data is only one"],422);
         }
 
         // membuat validasi terhadap request dari user berdasakan rules yang telah dibuat
@@ -96,7 +96,7 @@ class FeeController extends Controller
             
             $fee->delete();
             //mereturn response json berupa message data pada baris dengan id tersebut berhasil dihapus
-            return response()->json(["message"=>"Fee has been succesfully deleted"]);
+            return response()->json(["message"=>"Fee has been deleted"]);
         
         }
         else{

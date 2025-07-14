@@ -19,7 +19,7 @@ class AuthController extends Controller
         
         // pengkondisian jika hasilnya tidak valid maka akan mereturn respon json berupa error dari objek validator
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()],422);
+            return response()->json(['errors'=>$validator->errors()],422);
         }
 
         // membuat credential dari request 
